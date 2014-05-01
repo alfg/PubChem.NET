@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compounds\CompoundData.cs" />
+    <Compile Include="Compounds\CompoundDescription.cs" />
     <Compile Include="Errors\ApiError.cs" />
     <Compile Include="Errors\PubChemAPIException.cs" />
     <Compile Include="PubChemManager.cs" />

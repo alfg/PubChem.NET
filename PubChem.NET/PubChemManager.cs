@@ -32,7 +32,12 @@ namespace PubChem.NET
 
         #region API: Compound
 
-        public PCCompound GetCompoundsByCID(int cid)
+        /// <summary>
+        /// Gets Compound data by CID.
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <returns></returns>
+        public PCCompound GetCompound(int cid)
         {
             // Api action
             string apiAction = string.Format("compound/cid/{0}/json", cid);
@@ -46,6 +51,69 @@ namespace PubChem.NET
             // Make call
             var request = MakeAPICall<CompoundData>(apiAction, args);
             return request.PC_Compounds[0];
+        }
+
+        /// <summary>
+        /// Gets Compound data by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public PCCompound GetCompoundByName(string name)
+        {
+            // Api action
+            string apiAction = string.Format("compound/name/{0}/json", name);
+
+            // Create arguments object
+            object args = new
+            {
+                name = name
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundData>(apiAction, args);
+            return request.PC_Compounds[0];
+        }
+
+        /// <summary>
+        /// Gets Compound data by Inchikey (International Chemical Indentifier)
+        /// </summary>
+        /// <param name="inchikey"></param>
+        /// <returns></returns>
+        public PCCompound GetCompoundByInchikey(string inchikey)
+        {
+            // Api action
+            string apiAction = string.Format("compound/inchikey/{0}/json", inchikey);
+
+            // Create arguments object
+            object args = new
+            {
+                inchikey = inchikey
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundData>(apiAction, args);
+            return request.PC_Compounds[0];
+        }
+
+        /// <summary>
+        /// Gets Compound Description by CID.
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <returns></returns>
+        public Information GetCompoundDescription(int cid)
+        {
+            // Api action
+            string apiAction = string.Format("compound/cid/{0}/description/json", cid);
+
+            // Create arguments object
+            object args = new
+            {
+                cid = cid
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundDescription>(apiAction, args);
+            return request.InformationList.Information[0];
         }
 
         #endregion
@@ -62,18 +130,20 @@ namespace PubChem.NET
         /// <returns></returns>
         private T MakeAPICall<T>(string apiAction, object args)
         {
-            //
+            // Create Url path and client
             string fullUrl = string.Format(_httpUrl, apiAction);
             var client = new RestClient(); 
 
-            //
+            // Set default results
             T results = default(T);
 
+            // Make POST request and deserialize json response
             var request = new RestRequest(fullUrl, Method.POST);
             var response = client.Execute(request);
             var content = response.Content;
             results = JsonConvert.DeserializeObject<T>(content);
 
+            // Handle exception
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response.";
