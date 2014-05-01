@@ -6,7 +6,7 @@ namespace PubChem.NET.Errors
     [DataContract]
     public class ApiError
     {
-         [DataMember(Name = "status")]
+        [DataMember(Name = "status")]
         public string Status
         {
             get;

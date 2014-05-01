@@ -32,20 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack">
-      <HintPath>..\packages\ServiceStack.4.0.18\lib\net40\ServiceStack.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Client">
-      <HintPath>..\packages\ServiceStack.Client.4.0.18\lib\net40\ServiceStack.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\packages\ServiceStack.Common.4.0.18\lib\net40\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.0.18\lib\net40\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\packages\ServiceStack.Text.4.0.18\lib\net40\ServiceStack.Text.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Newtonsoft.Json;
 using PubChem.NET.Compounds;
 using PubChem.NET.Errors;
-using ServiceStack;
-using ServiceStack.Text;
+using RestSharp;
 
 namespace PubChem.NET
 {
@@ -16,7 +17,7 @@ namespace PubChem.NET
         /// The HTTP endpoint for the API.
         /// See https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html for more information
         /// </summary>
-        private string _httpUrl = "http://pubchem.ncbi.nlm.nih.gov/rest/pug/{0}";
+        private const string _httpUrl = "http://pubchem.ncbi.nlm.nih.gov/rest/pug/{0}";
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace PubChem.NET
 
         #region API: Compound
 
-        public CompoundData GetCompounds(int cid)
+        public PCCompound GetCompoundsByCID(int cid)
         {
             // Api action
             string apiAction = string.Format("compound/cid/{0}/json", cid);
@@ -43,7 +44,8 @@ namespace PubChem.NET
             };
 
             // Make call
-            return MakeAPICall<CompoundData>(apiAction, args);
+            var request = MakeAPICall<CompoundData>(apiAction, args);
+            return request.PC_Compounds[0];
         }
 
         #endregion
@@ -62,25 +64,21 @@ namespace PubChem.NET
         {
             //
             string fullUrl = string.Format(_httpUrl, apiAction);
+            var client = new RestClient(); 
 
             //
             T results = default(T);
 
-            try
-            {
-                //
-                var resultString = fullUrl.PostJsonToUrl(args);
-                results = resultString.Trim().FromJson<T>();
-            }
-            catch (Exception ex)
-            {
-                string errorBody = ex.GetResponseBody();
-                
-                //
-                ApiError apiError = errorBody.FromJson<ApiError>();
+            var request = new RestRequest(fullUrl, Method.POST);
+            var response = client.Execute(request);
+            var content = response.Content;
+            results = JsonConvert.DeserializeObject<T>(content);
 
-                //
-                throw new PubChemAPIException(apiError.Error, ex, apiError);
+            if (response.ErrorException != null)
+            {
+                const string message = "Error retrieving response.";
+                var pubchemException = new ApplicationException(message, response.ErrorException);
+                throw pubchemException;
             }
 
             // Return the results

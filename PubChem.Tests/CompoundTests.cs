@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PubChem.NET;
@@ -16,10 +17,12 @@ namespace PubChem.Tests
             PubChemManager mc = new PubChemManager();
 
             // Act
-            CompoundData data = mc.GetCompounds(2244);
+            var data = mc.GetCompoundsByCID(2244);
 
             // Assert
-            Assert.IsFalse(string.IsNullOrEmpty(data.PC_Compounds));
+//            Debug.WriteLine(data.id.id.cid);
+            Debug.WriteLine(data.cid);
+            Assert.IsFalse(string.IsNullOrEmpty(data.ToString()));
         }
     }
 }
