@@ -30,10 +30,10 @@ namespace PubChem.Tests
         public void GetCompoundByName_Successful()
         {
             // Arrange
-            PubChemManager mc = new PubChemManager();
+            PubChemManager pc = new PubChemManager();
 
             // Act
-            var data = mc.GetCompoundByName("Aspirin");
+            var data = pc.GetCompoundByName("Aspirin");
 
             // Assert
             Debug.WriteLine(data.cid);
@@ -46,10 +46,10 @@ namespace PubChem.Tests
         public void GetCompoundByInchikey_Successful()
         {
             // Arrange
-            PubChemManager mc = new PubChemManager();
+            PubChemManager pc = new PubChemManager();
 
             // Act
-            var data = mc.GetCompoundByInchikey("BPGDAMSIGCZZLK-UHFFFAOYSA-N");
+            var data = pc.GetCompoundByInchikey("BPGDAMSIGCZZLK-UHFFFAOYSA-N");
 
             // Assert
             Debug.WriteLine(data.cid);
@@ -62,15 +62,16 @@ namespace PubChem.Tests
         public void GetCompoundDescription_Successful()
         {
             // Arrange
-            PubChemManager mc = new PubChemManager();
+            PubChemManager pc = new PubChemManager();
 
             // Act
-            var data = mc.GetCompoundDescription(1983);
+            var data = pc.GetCompoundDescription(1983);
 
             // Assert
             Debug.WriteLine(data.CID);
             Debug.WriteLine(data.Title);
             Debug.WriteLine(data.DescriptionURL);
+            Debug.WriteLine(data.Description);
             Assert.IsFalse(string.IsNullOrEmpty(data.Title.ToString()));
         }
     }
