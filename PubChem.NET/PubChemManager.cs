@@ -19,6 +19,20 @@ namespace PubChem.NET
         /// </summary>
         private const string _httpUrl = "http://pubchem.ncbi.nlm.nih.gov/rest/pug/{0}";
 
+        /// <summary>
+        /// An array of available compound properties.
+        /// Used in GetCompoundProperties() method.
+        /// </summary>
+        private static readonly string[] _properties = new string[]
+        {
+            "MolecularFormula",
+            "MolecularWeight",
+            "CanonicalSMILES",
+            "IsomericSMILES",
+            "InChI",
+            "InChIKey"
+        };
+
         #endregion
 
         #region Constructors
@@ -116,10 +130,17 @@ namespace PubChem.NET
             return request.InformationList.Information[0];
         }
 
+        /// <summary>
+        /// Gets compound properties by CID.
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <returns></returns>
         public Property GetCompoundProperties(int cid)
         {
+            // Convert properties array to string
+            string properties = string.Join(",", _properties);
             // Api action
-            string apiAction = string.Format("compound/cid/{0}/property/MolecularFormula,MolecularWeight,InChIKey/json", cid);
+            string apiAction = string.Format("compound/cid/{0}/property/{1}/json", cid, properties);
 
             // Create arguments object
             object args = new
