@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compounds\CompoundProperty.cs" />
     <Compile Include="Compounds\CompoundData.cs" />
     <Compile Include="Compounds\CompoundDescription.cs" />
     <Compile Include="Errors\ApiError.cs" />

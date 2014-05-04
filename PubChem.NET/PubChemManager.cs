@@ -116,6 +116,22 @@ namespace PubChem.NET
             return request.InformationList.Information[0];
         }
 
+        public Property GetCompoundProperties(int cid)
+        {
+            // Api action
+            string apiAction = string.Format("compound/cid/{0}/property/MolecularFormula,MolecularWeight,InChIKey/json", cid);
+
+            // Create arguments object
+            object args = new
+            {
+                cid = cid,
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundProperty>(apiAction, args);
+            return request.PropertyTable.Properties[0];
+        }
+
         #endregion
 
         #region Generic API calling methods
