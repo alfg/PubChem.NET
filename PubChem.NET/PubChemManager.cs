@@ -30,7 +30,44 @@ namespace PubChem.NET
             "CanonicalSMILES",
             "IsomericSMILES",
             "InChI",
-            "InChIKey"
+            "InChIKey",
+            "IUPACName"
+        };
+
+        private static readonly string[] _extraProperties = new string[]
+        {
+            "XLogP",
+            "ExactMass",
+            "MonoisotopicMass",
+            "TPSA",
+            "Complexity",
+            "Charge",
+            "HBondDonorCount",
+            "HBondAcceptorCount",
+            "RotatableBondCount",
+            "HeavyAtomCount",
+            "IsotopeAtomCount",
+            "AtomStereoCount",
+            "DefinedAtomStereoCount",
+            "UndefinedAtomStereoCount",
+            "BondStereoCount",
+            "DefinedBondStereoCount",
+            "UndefinedBondStereoCount",
+            "CovalentUnitCount",
+            "Volume3D",
+            "XStericQuadrupole3D",
+            "YStericQuadrupole3D",
+            "ZStericQuadrupole3D",
+            "FeatureCount3D",
+            "FeatureAcceptorCount3D",
+            "FeatureDonorCount3D",
+            "FeatureAnionCount3D",
+            "FeatureCationCount3D",
+            "FeatureRingCount3D",
+            "FeatureHydrophobeCount3D",
+            "ConformerModelRMSD3D",
+            "EffectiveRotorCount3D",
+            "ConformerCount3D"
         };
 
         #endregion
@@ -134,18 +171,25 @@ namespace PubChem.NET
         /// Gets compound properties by CID.
         /// </summary>
         /// <param name="cid"></param>
+        /// <param name="extraPropertiesList"></param>
         /// <returns></returns>
-        public Property GetCompoundProperties(int cid)
+        public Property GetCompoundProperties(int cid, List<string> extraPropertiesList = null)
         {
-            // Convert properties array to string
             string properties = string.Join(",", _properties);
+
+            // Concatenate extra properties list if provided
+            if (extraPropertiesList != null)
+            {
+                var concatProperties = _properties.Concat(extraPropertiesList.ToArray());
+                properties = string.Join(",", concatProperties);
+            }
+
             // Api action
             string apiAction = string.Format("compound/cid/{0}/property/{1}/json", cid, properties);
 
             // Create arguments object
             object args = new
             {
-                cid = cid,
             };
 
             // Make call

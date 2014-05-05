@@ -93,10 +93,41 @@ namespace PubChem.Tests
             var data = pc.GetCompoundProperties(3434);
 
             // Debug output
+            Debug.WriteLine("--- Properties ---");
             Debug.WriteLine(data.CID);
             Debug.WriteLine(data.MolecularFormula);
             Debug.WriteLine(data.MolecularWeight);
-            Debug.WriteLine(data.InChIKey);
+            Debug.WriteLine(data.CanonicalSMILES);
+            Debug.WriteLine(data.IsomericSMILES);
+
+            // Assert
+            Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
+        }
+
+        [TestMethod]
+        public void GetCompoundExtraProperties_Successful()
+        {
+            // Arrange
+            PubChemManager pc = new PubChemManager();
+
+            // Test Extra properties
+            var extraProperties = new List<string> { "Complexity", "HeavyAtomCount" } ;
+            
+            // Act
+            var data = pc.GetCompoundProperties(3434, extraProperties);
+
+            // Debug output
+            Debug.WriteLine("--- Properties ---");
+            Debug.WriteLine(data.CID);
+            Debug.WriteLine(data.MolecularFormula);
+            Debug.WriteLine(data.MolecularWeight);
+            Debug.WriteLine(data.CanonicalSMILES);
+
+            // Extra properties
+            Debug.WriteLine("--- Extra Properties ---");
+            Debug.WriteLine(data.XLogP);
+            Debug.WriteLine(data.Complexity);
+            Debug.WriteLine(data.HeavyAtomCount);
 
             // Assert
             Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
