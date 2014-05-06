@@ -197,6 +197,32 @@ namespace PubChem.NET
             return request.PropertyTable.Properties[0];
         }
 
+        public PropertyTable ListCompoundProperties(List<int> cidsList, List<string> extraPropertiesList = null)
+        {
+            string cids = string.Join(",", cidsList);
+            string properties = string.Join(",", _properties);
+
+            // Concatenate extra properties list if provided
+            if (extraPropertiesList != null)
+            {
+                var concatProperties = _properties.Concat(extraPropertiesList.ToArray());
+                properties = string.Join(",", concatProperties);
+            }
+
+            // Api action
+            string apiAction = string.Format("compound/cid/{0}/property/{1}/json", cids, properties);
+
+            // Create arguments object
+            object args = new
+            {
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundProperty>(apiAction, args);
+            return request.PropertyTable;
+            
+        }
+
         #endregion
 
         #region Generic API calling methods

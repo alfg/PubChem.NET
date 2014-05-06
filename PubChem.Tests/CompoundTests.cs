@@ -132,5 +132,27 @@ namespace PubChem.Tests
             // Assert
             Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
         }
+
+        [TestMethod]
+        public void ListCompoundProperties_Successful()
+        {
+            // Arrange
+            PubChemManager pc = new PubChemManager();
+
+            List<int> properties = new List<int>() {3434, 1212};
+            
+            // Act
+            var data = pc.ListCompoundProperties(properties);
+
+            // Debug output
+            Debug.WriteLine(data.Properties[0].CID);
+            Debug.WriteLine(data.Properties[0].IUPACName);
+
+            Debug.WriteLine(data.Properties[1].CID);
+            Debug.WriteLine(data.Properties[1].InChI);
+
+            // Assert
+            Assert.IsFalse(string.IsNullOrEmpty(data.Properties[0].CID.ToString()));
+        }
     }
 }
