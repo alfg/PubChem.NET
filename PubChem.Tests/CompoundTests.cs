@@ -154,5 +154,71 @@ namespace PubChem.Tests
             // Assert
             Assert.IsFalse(string.IsNullOrEmpty(data.Properties[0].CID.ToString()));
         }
+
+        [TestMethod]
+        public void GetCompoundSynonyms_Successful()
+        {
+            // Arrange
+            PubChemManager pc = new PubChemManager();
+
+            // Act
+            var data = pc.GetCompoundSynonyms(2244); // Aspirin
+
+            // Debug output
+            Debug.WriteLine(data.CID);
+
+            foreach (string i in data.Synonym)
+            {
+                Debug.WriteLine(i);
+            }
+            Debug.WriteLine(data.Synonym);
+
+            // Assert
+            Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
+        }
+
+        [TestMethod]
+        public void GetCompoundSynonymsByName_Successful()
+        {
+            // Arrange
+            PubChemManager pc = new PubChemManager();
+
+            // Act
+            var data = pc.GetCompoundSynonymsByName("Aspirin"); // Aspirin
+
+            // Debug output
+            Debug.WriteLine(data.CID);
+
+            foreach (string i in data.Synonym)
+            {
+                Debug.WriteLine(i);
+            }
+            Debug.WriteLine(data.Synonym);
+
+            // Assert
+            Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
+        }
+
+        [TestMethod]
+        public void GetCompoundSynonymsBySmiles_Successful()
+        {
+            // Arrange
+            PubChemManager pc = new PubChemManager();
+
+            // Act
+            var data = pc.GetCompoundSynonymsBySmiles("CCCC"); // Aspirin
+
+            // Debug output
+            Debug.WriteLine(data.CID);
+
+            foreach (string i in data.Synonym)
+            {
+                Debug.WriteLine(i);
+            }
+            Debug.WriteLine(data.Synonym);
+
+            // Assert
+            Assert.IsFalse(string.IsNullOrEmpty(data.CID.ToString()));
+        }
     }
 }

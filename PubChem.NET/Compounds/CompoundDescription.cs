@@ -13,6 +13,7 @@ namespace PubChem.NET.Compounds
         public string Description { get; set; }
         public string DescriptionSourceName { get; set; }
         public string DescriptionURL { get; set; }
+        public List<string> Synonym { get; set; }
     }
 
     public class InformationList

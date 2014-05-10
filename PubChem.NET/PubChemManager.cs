@@ -197,6 +197,12 @@ namespace PubChem.NET
             return request.PropertyTable.Properties[0];
         }
 
+        /// <summary>
+        /// Returns a list of Compound Properties
+        /// </summary>
+        /// <param name="cidsList"></param>
+        /// <param name="extraPropertiesList"></param>
+        /// <returns></returns>
         public PropertyTable ListCompoundProperties(List<int> cidsList, List<string> extraPropertiesList = null)
         {
             string cids = string.Join(",", cidsList);
@@ -221,6 +227,69 @@ namespace PubChem.NET
             var request = MakeAPICall<CompoundProperty>(apiAction, args);
             return request.PropertyTable;
             
+        }
+
+        /// <summary>
+        /// Gets Compound Description by CID.
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <returns></returns>
+        public Information GetCompoundSynonyms(int cid)
+        {
+            // Api action
+            string apiAction = string.Format("compound/cid/{0}/synonyms/json", cid);
+
+            // Create arguments object
+            object args = new
+            {
+                cid = cid
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundDescription>(apiAction, args);
+            return request.InformationList.Information[0];
+        }
+
+        /// <summary>
+        /// Gets Compound Description by Name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Information GetCompoundSynonymsByName(string name)
+        {
+            // Api action
+            string apiAction = string.Format("compound/name/{0}/synonyms/json", name);
+
+            // Create arguments object
+            object args = new
+            {
+                name = name
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundDescription>(apiAction, args);
+            return request.InformationList.Information[0];
+        }
+
+        /// <summary>
+        /// Gets Compound Description by SMILES.
+        /// </summary>
+        /// <param name="smiles"></param>
+        /// <returns></returns>
+        public Information GetCompoundSynonymsBySmiles(string smiles)
+        {
+            // Api action
+            string apiAction = string.Format("compound/smiles/{0}/synonyms/json", smiles);
+
+            // Create arguments object
+            object args = new
+            {
+                smiles = smiles
+            };
+
+            // Make call
+            var request = MakeAPICall<CompoundDescription>(apiAction, args);
+            return request.InformationList.Information[0];
         }
 
         #endregion
