@@ -3,8 +3,6 @@ PubChem.NET
 
 .NET Wrapper for the [PubChem PUG REST API](https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html)
 
-[![Build Status](https://travis-ci.org/alfg/PubChem.NET.svg?branch=master)](https://travis-ci.org/alfg/PubChem.NET)
-
 ### Quick Start
 Install the [NuGet package](https://nuget.org/packages/PubChem.NET/) from the package manager console:
 
